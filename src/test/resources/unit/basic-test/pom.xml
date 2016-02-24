@@ -22,7 +22,7 @@
                 <groupId>com.quiptiq</groupId>
                 <artifactId>json-maven-plugin</artifactId>
                 <configuration>
-                    <json.inputfile>test/resources/unit.basic-test/basic-test.json</json.inputfile>
+                    <inputFile>test/resources/unit.basic-test/basic-test.json</inputFile>
                 </configuration>
                 <executions>
                     <execution>

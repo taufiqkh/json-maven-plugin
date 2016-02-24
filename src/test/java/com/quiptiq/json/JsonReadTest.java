@@ -1,5 +1,6 @@
 package com.quiptiq.json;
 
+import com.quiptiq.JsonRead;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 
 import java.io.File;
@@ -29,8 +30,8 @@ public class JsonReadTest
             assertNotNull(testPom);
             assertTrue(testPom.exists());
 
-            //JsonRead mojo = (JsonRead) lookupMojo( "read", testPom );
+            JsonRead mojo = (JsonRead) lookupMojo( "read", testPom );
 
-            //assertNotNull( mojo );
+            assertNotNull(mojo);
         }
 }
