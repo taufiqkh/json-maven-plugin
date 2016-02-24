@@ -23,29 +23,14 @@
                 <groupId>com.quiptiq</groupId>
                 <artifactId>json-maven-plugin</artifactId>
                 <configuration>
-                    <inputFile>test/resources/unit.basic-test/basic-test.json</inputFile>
+                    <inputFile>src/test/resources/basic-valid/basic-valid.json</inputFile>
                 </configuration>
                 <executions>
                     <execution>
+                        <phase>validate</phase>
                         <goals>
                             <goal>read</goal>
                         </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <tasks>
-                                <echo>Hey test: ${json.inputFile}</echo>
-                            </tasks>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>

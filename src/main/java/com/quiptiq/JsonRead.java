@@ -1,7 +1,8 @@
 package com.quiptiq;
 
 /*
- * Copyright 2001-2005 The Apache Software Foundation.
+ * Changes Copyright 2016 Taufiq Hoven
+ * Modified from Apache Maven archetype, The Apache Software Foundation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +29,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Properties;
 
 /**
  * Goal reads json from an input file.
@@ -36,7 +38,7 @@ import java.io.IOException;
 @Mojo(name = "read")
 public class JsonRead extends AbstractMojo
 {
-    /* Don't cache the logger, since its construction will be done by IoC after construction */
+    /* Don't cache the logger, since its construction will be done by injection */
 
     /**
      * Location of the file.
@@ -45,9 +47,9 @@ public class JsonRead extends AbstractMojo
     private File inputFile;
 
     @Parameter(property = "json.outputproperty")
-    private String outputProperty = "json";
+    private String outputProperty = "json.output";
 
-    @Parameter(defaultValue = "${project}")
+    @Parameter(defaultValue = "${project}", required = true, readonly = true)
     private MavenProject project;
 
     public void execute()
@@ -59,13 +61,14 @@ public class JsonRead extends AbstractMojo
             throw new MojoExecutionException("Null specified for json.inputfile parameter");
         }
         if (!f.exists()) {
-            throw new MojoFailureException("Json input file " + f.getName() + " does not exist");
+            throw new MojoFailureException("Json input file " + f.getAbsolutePath() + " does not exist");
         }
 
         try (FileInputStream fileInputStream = new FileInputStream(f)) {
             JSONTokener tokener = new JSONTokener(new FileInputStream(f));
-            project.getProperties();
-
+            Properties properties = project.getProperties();
+            // TODO: fill out properties in a more fine-grained way
+            properties.setProperty(outputProperty, tokener.toString());
         }
         catch (FileNotFoundException e) {
             throw new MojoFailureException("Can't find file " + f.getAbsolutePath());
