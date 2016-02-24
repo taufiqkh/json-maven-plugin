@@ -2,6 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- Test pom - used to test valid pom for the json reader maven plugin -->
     <groupId>com.quiptiq.test</groupId>
     <artifactId>test</artifactId>
     <packaging>jar</packaging>
@@ -29,6 +30,22 @@
                         <goals>
                             <goal>read</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <echo>Hey test: ${json.inputFile}</echo>
+                            </tasks>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

@@ -26,7 +26,7 @@ public class JsonReadTest
         public void testMojoGoal() throws Exception
         {
             File testPom = new File( getBasedir(),
-                    "src/test/resources/unit/basic-test/pom.xml" );
+                    "src/test/resources/unit/basic-valid/pom.xml" );
             assertNotNull(testPom);
             assertTrue(testPom.exists());
 
