@@ -6,12 +6,9 @@
     <packaging>maven-plugin</packaging>
     <version>0.1-SNAPSHOT</version>
 
-    <prerequisites>
-        <maven>2.2.1</maven>
-    </prerequisites>
-
     <properties>
-        <maven-api-version>3.3.3</maven-api-version>
+        <maven-api-version>3.3.9</maven-api-version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <name>Json Reader</name>
@@ -83,6 +80,13 @@
             <groupId>org.apache.maven.plugin-testing</groupId>
             <artifactId>maven-plugin-testing-harness</artifactId>
             <version>3.3.0</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Needed for the plugin testing harness to work -->
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-compat</artifactId>
+            <version>${maven-api-version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
