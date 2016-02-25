@@ -23,7 +23,9 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
-import org.json.JSONTokener;
+
+import javax.json.Json;
+import javax.json.stream.JsonParser;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,13 +43,28 @@ public class JsonRead extends AbstractMojo
     /* Don't cache the logger, since its construction will be done by injection */
 
     /**
+     * Name of the property that will contain the path to the input file
+     */
+    private static final String PROPERTY_INPUT_FILE = "json.inputFile";
+
+    /**
+     * Name of the property that contains the name of the property to which the json is assigned.
+     */
+    private static final String PROPERTY_OUTPUT = "json.outputProperty";
+
+    /**
+     * Default value for the property to which the json is assigned.
+     */
+    private static final String DEFAULT_OUTPUT_PROPERTY = "json.output";
+
+    /**
      * Location of the file.
      */
-    @Parameter(property = "json.inputfile", required = true)
+    @Parameter(property = PROPERTY_INPUT_FILE, required = true)
     private File inputFile;
 
-    @Parameter(property = "json.outputproperty")
-    private String outputProperty = "json.output";
+    @Parameter(property = PROPERTY_OUTPUT)
+    private String outputProperty = DEFAULT_OUTPUT_PROPERTY;
 
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
     private MavenProject project;
@@ -55,26 +72,27 @@ public class JsonRead extends AbstractMojo
     public void execute()
         throws MojoExecutionException, MojoFailureException
     {
-        File f = inputFile;
-
-        if (f == null) {
+        // Maven should prevent nulls, but crazier things have happened
+        if (inputFile == null) {
             throw new MojoExecutionException("Null specified for json.inputfile parameter");
         }
-        if (!f.exists()) {
-            throw new MojoFailureException("Json input file " + f.getAbsolutePath() + " does not exist");
+        if (!inputFile.exists()) {
+            throw new MojoFailureException("Json input file " + inputFile.getAbsolutePath() + " does not exist");
         }
 
-        try (FileInputStream fileInputStream = new FileInputStream(f)) {
-            JSONTokener tokener = new JSONTokener(new FileInputStream(f));
+        try (FileInputStream fileInputStream = new FileInputStream(inputFile)) {
+            JsonParser parser = Json.createParser(fileInputStream);
             Properties properties = project.getProperties();
             // TODO: fill out properties in a more fine-grained way
-            properties.setProperty(outputProperty, tokener.toString());
+            properties.setProperty(outputProperty, parser.toString());
         }
         catch (FileNotFoundException e) {
-            throw new MojoFailureException("Can't find file " + f.getAbsolutePath());
+            throw new MojoFailureException("Can't find json input file "
+                    + inputFile.getAbsolutePath());
         }
         catch (IOException e) {
-            throw new MojoExecutionException("Error reading file " + f.getAbsolutePath(), e);
+            throw new MojoExecutionException("Error reading json input file "
+                    + inputFile.getAbsolutePath(), e);
         }
     }
 }
