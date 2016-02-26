@@ -31,6 +31,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -69,6 +70,12 @@ public class JsonRead extends AbstractMojo
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
     private MavenProject project;
 
+    @Parameter
+    private String[] names;
+
+    @Parameter
+    private String name;
+
     public void execute()
         throws MojoExecutionException, MojoFailureException
     {
@@ -81,6 +88,18 @@ public class JsonRead extends AbstractMojo
         }
 
         try (FileInputStream fileInputStream = new FileInputStream(inputFile)) {
+            if (name == null && names == null) {
+                throw new MojoExecutionException(
+                        "Name or names of json elements to be saved should be configured");
+            } else if (name != null && names != null) {
+                throw new MojoExecutionException("Cannot specify both name and names");
+            }
+            String[] namesToRetrieve;
+            if (name != null) {
+                namesToRetrieve = new String[]{name};
+            } else {
+                namesToRetrieve = names;
+            }
             JsonParser parser = Json.createParser(fileInputStream);
             Properties properties = project.getProperties();
             // TODO: fill out properties in a more fine-grained way
