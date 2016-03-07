@@ -24,6 +24,10 @@
                 <artifactId>json-maven-plugin</artifactId>
                 <configuration>
                     <inputFile>src/test/resources/basic-valid/basic-valid.json</inputFile>
+                    <names>
+                        <name>name</name>
+                        <name>second.node</name>
+                    </names>
                 </configuration>
                 <executions>
                     <execution>
