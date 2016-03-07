@@ -66,6 +66,13 @@
             <version>1.0.4</version>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- Mainly for its trie implementation -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.1</version>
+        </dependency>
     </dependencies>
 
     <build>

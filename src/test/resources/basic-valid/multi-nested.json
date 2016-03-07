@@ -1,0 +1,19 @@
+{
+  "ignored": [ 1, 2, 3 ],
+  "key": "value",
+  "array": [ 123, 456, "abracadabra" ],
+  "ignored-array": [ "yabba", "dabba", "d", 0, 0 ],
+  "object": {
+    "object-array": [ 4, 5, 6 ],
+    "object-object": {
+      "object-object-key": "nested-nested-value"
+    },
+    "nested-key": "nested-value",
+    "ignored": "lalala"
+  },
+  "dummy-object": { "a": 1 },
+  "object2": {
+    "object2-key": "object2-value"
+  },
+  "array2": [ 7, 8, 9, { "array2-object-key": "array2-object-value", "array-object-key2": "ignored" } ]
+}
