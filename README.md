@@ -45,12 +45,12 @@ For example, given the following valid.json file:
 ```json
 {
   "firstname": "Bob",
-  "surname": "Smith"
+  "surname": "Smith",
   "address":
   {
-    "streetnumber": 214
+    "streetnumber": 214,
     "street": "jellicoe",
-    "suburb": "Chelmer"
+    "suburb": "Chelmer",
     "city": "Brisbane"
   }
 }
