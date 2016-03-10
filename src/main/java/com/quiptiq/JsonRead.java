@@ -44,28 +44,16 @@ public class JsonRead extends AbstractMojo
     /* Don't cache the logger, since its construction will be done by injection */
 
     /**
-     * Name of the property that will contain the path to the input file
-     */
-    private static final String PROPERTY_INPUT_FILE = "json.inputFile";
-
-    /**
-     * Name of the property that contains the name of the property to which the json is assigned.
-     */
-    private static final String PROPERTY_OUTPUT = "json.outputProperty";
-
-    /**
-     * Default value for the property to which the json is assigned.
-     */
-    private static final String DEFAULT_OUTPUT_PROPERTY = "json.output";
-
-    /**
      * Location of the file.
      */
-    @Parameter(property = PROPERTY_INPUT_FILE, required = true)
+    @Parameter(required = true)
     private File inputFile;
 
-    @Parameter(property = PROPERTY_OUTPUT)
-    private String outputProperty = DEFAULT_OUTPUT_PROPERTY;
+    /**
+     * Property to which the json is assigned.
+     */
+    @Parameter
+    private String outputProperty = "json.output";
 
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
     private MavenProject project;

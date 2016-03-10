@@ -23,6 +23,7 @@
                 <groupId>com.quiptiq</groupId>
                 <artifactId>json-maven-plugin</artifactId>
                 <configuration>
+                    <outputProperty>testOut</outputProperty>
                     <inputFile>src/test/resources/basic-valid/basic-valid.json</inputFile>
                     <names>
                         <name>name</name>
