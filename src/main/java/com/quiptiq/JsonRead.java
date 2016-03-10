@@ -102,11 +102,17 @@ public class JsonRead extends AbstractMojo
             }
             JsonParser parser = Json.createParser(fileInputStream);
             Properties properties = project.getProperties();
-            // TODO: fill out properties in a more fine-grained way
-            properties.setProperty(outputProperty, parser.toString());
+            PropertyJsonPopulator jsonPopulator = new PropertyJsonPopulator(namesToRetrieve);
+            try {
+                jsonPopulator.populate(properties, outputProperty, parser);
+            } catch (JsonKeyRequestException e) {
+                throw new MojoFailureException("File didn't match key request", e);
+            } catch (JsonParseException e) {
+                throw new MojoFailureException("Error parsing JSON", e);
+            }
         }
         catch (FileNotFoundException e) {
-            throw new MojoFailureException("Can't find json input file "
+            throw new MojoExecutionException("Can't find json input file "
                     + inputFile.getAbsolutePath());
         }
         catch (IOException e) {

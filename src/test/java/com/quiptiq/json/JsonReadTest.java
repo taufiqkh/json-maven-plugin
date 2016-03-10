@@ -54,7 +54,7 @@ public class JsonReadTest {
             rule.setVariableValueToObject(mojo, "project", mvnProject);
             mojo.execute();
             Properties properties = mvnProject.getProperties();
-            String jsonOutput = properties.getProperty("json.output");
-            assertNotNull(jsonOutput);
+            assertEquals("Test Name", properties.getProperty("json.output.name"));
+            assertEquals("child", properties.getProperty("json.output.second.node"));
         }
 }
